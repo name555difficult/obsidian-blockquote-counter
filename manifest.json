@@ -1,7 +1,7 @@
 {
   "id": "blockquote-counter",
   "name": "Blockquote Counter",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "minAppVersion": "1.5.0",
   "description": "Count characters and words in individual blockquotes and callouts, track configurable limits, and copy the exact counted Markdown.",
   "author": "name555difficult",

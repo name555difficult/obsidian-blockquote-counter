@@ -238,7 +238,7 @@
 }
 
 .bqc-reading-toolbar[hidden] {
-  display: none !important;
+  display: none;
 }
 
 .callout-title > [data-bqc-callout-badge],
@@ -270,7 +270,7 @@
 @media print {
   .bqc-badge,
   .bqc-reading-toolbar {
-    display: none !important;
+    display: none;
   }
 }
 

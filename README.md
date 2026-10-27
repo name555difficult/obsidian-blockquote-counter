@@ -15,11 +15,13 @@ Count the text inside each top-level blockquote and callout in Obsidian. See cha
 
 ## Install
 
+Open the [official community listing](https://community.obsidian.md/plugins/blockquote-counter) and choose **Add to Obsidian**. You can also search for **Blockquote Counter** under **Settings → Community plugins → Browse** once the directory index has synced.
+
+If the listing is not yet available in your app, install manually:
+
 1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/name555difficult/obsidian-blockquote-counter/releases/latest).
 2. Create `.obsidian/plugins/blockquote-counter/` inside your vault and place all three files there.
 3. Reload Obsidian, then enable **Blockquote Counter** in **Settings → Community plugins**.
-
-This is a manual installation. The plugin is not listed in Obsidian's community plugin directory.
 
 ## Use
 

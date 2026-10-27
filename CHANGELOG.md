@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.2
+
+- Remove unnecessary CSS priority overrides for hidden and printed badges.
+- Include a package lockfile for automated build verification.
+- Link to the official community directory in the installation instructions.
+
 ## 1.0.1
 
 - Preserve custom view positions during plugin reloads.

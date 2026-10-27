@@ -15,11 +15,13 @@
 
 ## 安装
 
+打开[官方社区目录页面](https://community.obsidian.md/plugins/blockquote-counter)，点击 **Add to Obsidian**。目录索引同步后，也可以在 **设置 → 第三方插件 → 浏览**中搜索 **Blockquote Counter**。
+
+如果应用内暂时还找不到该插件，可以手动安装：
+
 1. 从[最新版本](https://github.com/name555difficult/obsidian-blockquote-counter/releases/latest)下载 `main.js`、`manifest.json` 和 `styles.css`。
 2. 在笔记库中创建 `.obsidian/plugins/blockquote-counter/`，把这三个文件放进去。
 3. 重新加载 Obsidian，在 **设置 → 第三方插件**中启用 **Blockquote Counter**。
-
-目前采用手动安装方式，插件尚未列入 Obsidian 第三方插件目录。
 
 ## 使用
 
