@@ -93,3 +93,7 @@ npm run build
 Edit `src/main.js` and `lib/counter.js`, then build to regenerate `main.js`. Install the generated `main.js` together with `manifest.json` and `styles.css` in a test vault.
 
 See the [Obsidian developer documentation](https://docs.obsidian.md/Plugins/Getting+started/Build+a+plugin) and [Obsidian API](https://github.com/obsidianmd/obsidian-api) for host APIs.
+
+## License
+
+[MIT](LICENSE) — copyright (c) 2026 name555difficult.

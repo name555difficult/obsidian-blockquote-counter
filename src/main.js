@@ -173,7 +173,7 @@ class CounterView extends ItemView {
       card.createDiv({ text: quote.text.replace(/\s+/g, " ").slice(0, 140) || "空引用框", cls: "bqc-preview" });
       const actions = card.createDiv({ cls: "bqc-actions" });
       const copy = actions.createEl("button", { text: "复制正文" });
-      copy.addEventListener("click", () => this.plugin.copyFromSnapshot(snapshot, quote));
+      copy.addEventListener("click", () => this.plugin.copyFromSnapshot(snapshot, quote, copy.ownerDocument.defaultView));
       const locate = actions.createEl("button", { text: "定位" });
       locate.addEventListener("click", () => this.plugin.locate(snapshot.file, quote));
     }
@@ -186,7 +186,6 @@ class CounterSettings extends PluginSettingTab {
   display() {
     const root = this.containerEl;
     root.empty();
-    root.createEl("h2", { text: "Blockquote Counter" });
     new Setting(root).setName("每个引用块的字符上限").setDesc("默认 2000；可按需要调整。")
       .addText(input => input.setValue(String(this.plugin.settings.limit)).onChange(value => {
         const parsed = Number(value);
@@ -216,10 +215,11 @@ module.exports = class BlockquoteCounter extends Plugin {
     this.addSettingTab(new CounterSettings(this.app, this));
     this.addRibbonIcon("text-cursor-input", "引用块统计", () => this.openPanel());
     this.addCommand({ id: "open-counter", name: "打开引用块统计", callback: () => this.openPanel() });
-    this.addCommand({ id: "copy-current-block", name: "复制光标所在引用块正文", editorCallback: (editor) => {
+    this.addCommand({ id: "copy-current-block", name: "复制光标所在引用块正文", editorCallback: (editor, context) => {
       const line = editor.getCursor().line;
       const quote = parseQuotes(editor.getValue()).find(q => line >= q.startLine && line <= q.endLine);
-      if (quote) this.copyQuote(quote); else new Notice("请先把光标放入一个 > 引用框。");
+      const ownerWindow = context instanceof MarkdownView ? context.containerEl.ownerDocument.defaultView : activeWindow;
+      if (quote) this.copyQuote(quote, ownerWindow); else new Notice("请先把光标放入一个 > 引用框。");
     } });
     this.status = this.addStatusBarItem();
     this.status.addClass("bqc-status");
@@ -285,7 +285,9 @@ module.exports = class BlockquoteCounter extends Plugin {
       this.status.setAttribute("title", "点击打开引用块统计");
       this.status.className = "status-bar-item bqc-status";
     }
-    for (const leaf of this.app.workspace.getLeavesOfType(VIEW_TYPE)) leaf.view.render(snapshot);
+    for (const leaf of this.app.workspace.getLeavesOfType(VIEW_TYPE)) {
+      if (leaf.view instanceof CounterView) leaf.view.render(snapshot);
+    }
     for (const [element] of this.readingBadges) if (!element.isConnected) this.readingBadges.delete(element);
   }
   async openPanel() {
@@ -295,19 +297,19 @@ module.exports = class BlockquoteCounter extends Plugin {
       if (!leaf) return;
       await leaf.setViewState({ type: VIEW_TYPE, active: true });
     }
-    this.app.workspace.revealLeaf(leaf);
+    await this.app.workspace.revealLeaf(leaf);
     this.scheduleRefresh();
   }
-  async copyQuote(quote) {
+  async copyQuote(quote, ownerWindow = activeWindow) {
     try {
-      await navigator.clipboard.writeText(quote.text);
+      await ownerWindow.navigator.clipboard.writeText(quote.text);
       new Notice(`已复制 ${number(this.count(quote))} 字符（不含外层 >）`);
     } catch (error) {
       console.error("Blockquote Counter: clipboard", error);
       new Notice("无法访问剪贴板，请在笔记中手动复制正文。");
     }
   }
-  async copyFromSnapshot(snapshot, quote) {
+  async copyFromSnapshot(snapshot, quote, ownerWindow = activeWindow) {
     // Never copy outdated text during the editor's refresh debounce.
     // Do not guess a block's identity after an insertion or deletion shifts it.
     const view = this.app.workspace.getLeavesOfType("markdown").map(leaf => leaf.view)
@@ -318,7 +320,7 @@ module.exports = class BlockquoteCounter extends Plugin {
       new Notice("正文刚刚更新，统计已刷新，请再点击一次复制。");
       return;
     }
-    await this.copyQuote(quote);
+    await this.copyQuote(quote, ownerWindow);
   }
   async locate(file, quote) {
     const existing = this.app.workspace.getLeavesOfType("markdown").find(leaf => leaf.view.file === file);
@@ -376,6 +378,5 @@ module.exports = class BlockquoteCounter extends Plugin {
     this.refreshToken++;
     for (const [element] of this.readingBadges) element.parentElement?.remove();
     this.readingBadges.clear();
-    this.app.workspace.detachLeavesOfType(VIEW_TYPE);
   }
 };

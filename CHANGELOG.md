@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.1
+
+- Preserve custom view positions during plugin reloads.
+- Safely handle deferred sidebar views during startup.
+- Use the originating window's clipboard for copy actions in pop-out windows.
+- Align the settings panel with Obsidian UI guidelines.
+- Add the MIT license.
+
 ## 1.0.0
 
 - Count top-level blockquotes and callouts independently.

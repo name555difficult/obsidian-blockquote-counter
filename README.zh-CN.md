@@ -93,3 +93,7 @@ npm run build
 修改 `src/main.js` 和 `lib/counter.js` 后重新构建，将生成的 `main.js`、`manifest.json` 与 `styles.css` 安装到测试笔记库。
 
 参考：[Obsidian 开发文档](https://docs.obsidian.md/Plugins/Getting+started/Build+a+plugin)、[Obsidian 官方 API](https://github.com/obsidianmd/obsidian-api)。
+
+## 许可证
+
+采用 [MIT 许可证](LICENSE)，版权归 name555difficult 所有。

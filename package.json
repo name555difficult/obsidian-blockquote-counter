@@ -1,6 +1,6 @@
 {
   "name": "blockquote-counter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Count characters and words in Obsidian blockquotes and callouts",
   "scripts": {
@@ -18,5 +18,6 @@
   "homepage": "https://github.com/name555difficult/obsidian-blockquote-counter",
   "bugs": {
     "url": "https://github.com/name555difficult/obsidian-blockquote-counter/issues"
-  }
+  },
+  "license": "MIT"
 }
