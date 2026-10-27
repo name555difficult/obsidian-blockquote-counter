@@ -1,0 +1,8 @@
+node_modules/
+release/
+.DS_Store
+*.log
+data.json
+.env
+.env.*
+.obsidian/
